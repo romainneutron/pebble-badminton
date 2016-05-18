@@ -6,7 +6,7 @@
 
 typedef enum {
   NUM_SETS,
-  TIE_BREAKS,
+  NUM_POINTS,
   FINAL_SET,
   FIRST_SERVER,
   SERIALISED_MATCH,

@@ -5,7 +5,9 @@ static State *final_state;
 
 static TextLayer *result;
 static TextLayer *match_score;
+static TextLayer *match_score_details;
 static char match_score_str[6];
+static char match_score_details_str[30];
 
 static void window_load(Window *window) {
 
@@ -20,12 +22,35 @@ static void window_load(Window *window) {
   text_layer_set_text_alignment(result, GTextAlignmentCenter);
   layer_add_child(window_layer, (Layer *) result);
 
-  match_score = text_layer_create(GRect(0, 75, bounds.size.w, 50));
+  match_score = text_layer_create(GRect(0, 55, bounds.size.w, 50));
   snprintf(match_score_str, sizeof(match_score_str), "%d - %d", final_state->player_sets, final_state->opponent_sets);
   text_layer_set_text(match_score, match_score_str);
   text_layer_set_font(match_score, fonts_get_system_font(FONT_KEY_BITHAM_42_LIGHT));
   text_layer_set_text_alignment(match_score, GTextAlignmentCenter);
   layer_add_child(window_layer, (Layer *) match_score);
+  
+  match_score_details = text_layer_create(GRect(0, 115, bounds.size.w, 50));
+  switch (final_state->player_sets + final_state->opponent_sets) {
+    case 3:
+      snprintf(match_score_details_str, sizeof(match_score_details_str), "%d - %d ; %d - %d ; %d - %d", 
+                   final_state->player_sets_final_scores[0], final_state->opponent_sets_final_scores[0],
+                   final_state->player_sets_final_scores[1], final_state->opponent_sets_final_scores[1],
+                   final_state->player_sets_final_scores[2], final_state->opponent_sets_final_scores[2]);
+      break;
+    case 2:
+      snprintf(match_score_details_str, sizeof(match_score_details_str), "%d - %d ; %d - %d", 
+                   final_state->player_sets_final_scores[0], final_state->opponent_sets_final_scores[0],
+                   final_state->player_sets_final_scores[1], final_state->opponent_sets_final_scores[1]);
+      break;
+    default:
+      snprintf(match_score_details_str, sizeof(match_score_details_str), "%d - %d", 
+                   final_state->player_sets_final_scores[0], final_state->opponent_sets_final_scores[0]);
+      break;
+  }                                                                                                   
+  text_layer_set_text(match_score_details, match_score_details_str);
+  text_layer_set_font(match_score_details, fonts_get_system_font(FONT_KEY_ROBOTO_CONDENSED_21));
+  text_layer_set_text_alignment(match_score_details, GTextAlignmentCenter);
+  layer_add_child(window_layer, (Layer *) match_score_details);
 
 }
 

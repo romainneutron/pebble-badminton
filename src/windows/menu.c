@@ -5,53 +5,53 @@ static Window *s_main_window;
 static SimpleMenuLayer *main_menu_layer;
 static SimpleMenuSection main_menu_sections[2];
 static SimpleMenuItem main_menu_items[1];
-static SimpleMenuItem main_menu_item_options[4];
+static SimpleMenuItem main_menu_item_options[2];
 
-static const char *final_set_options[] = { "Tie break at 6-6", "No tie break", "Championship tie break" };
-static const char *switch_options[] = { "Yes", "No" };
+static const char *score_type[] = { "3 sets of 21 points", "1 set of 21 points", "3 sets of 15 points", "custom" };
 
 static Settings settings;
 
-void toggle_switch_setting(int *setting) {
-  *setting ^= 1;
-}
-
-const char *num_sets_to_string(int n) {
+const char *setting_to_string(int n) {
   switch (n) {
     case 1: return "1";
     case 3: return "3";
-    case 5: return "5";
+    case 15: return "15";
+    case 21: return "21";
     default: return "?";
   }
 }
 
-void cycle_match_type() {
+void cycle_score_types() {
+  main_menu_item_options[0].subtitle = setting_to_string(settings.num_sets);
+  layer_mark_dirty(simple_menu_layer_get_layer(main_menu_layer));
+}
+
+void cycle_set_num() {
   switch (settings.num_sets) {
-    case 1:
-    case 3:
-      settings.num_sets = settings.num_sets + 2;
+    case 1: 
+      settings.num_sets = 3;
       break;
-    default:
+    case 3: 
       settings.num_sets = 1;
       break;
   }
-  main_menu_item_options[0].subtitle = num_sets_to_string(settings.num_sets);
+  main_menu_item_options[0].subtitle = setting_to_string(settings.num_sets);
   layer_mark_dirty(simple_menu_layer_get_layer(main_menu_layer));
 }
 
-void cycle_final_set_setting() {
-  if (settings.final_set < 2) {
-    ++settings.final_set;
-  } else {
-    settings.final_set = 0;
+void cycle_points() {
+  switch (settings.num_points) {
+    case 15: 
+      settings.num_points = 21;
+      break;
+    case 21: 
+      settings.num_points = 15;
+      break;
+    default:
+      settings.num_points = 99;
+      break;
   }
-  main_menu_item_options[2].subtitle = final_set_options[settings.final_set];
-  layer_mark_dirty(simple_menu_layer_get_layer(main_menu_layer));
-}
-
-void cycle_tie_breaks_setting() {
-  toggle_switch_setting(&settings.tie_breaks);
-  main_menu_item_options[1].subtitle = switch_options[settings.tie_breaks];
+  main_menu_item_options[1].subtitle = setting_to_string(settings.num_points);
   layer_mark_dirty(simple_menu_layer_get_layer(main_menu_layer));
 }
 
@@ -68,6 +68,7 @@ static void window_load(Window *window) {
 
   settings = (Settings)
     { .num_sets = 3
+    , .num_points = 21
     , .first_server = PLAYER
     };
 
@@ -86,15 +87,22 @@ static void window_load(Window *window) {
   main_menu_sections[1] = (SimpleMenuSection) {
     .title = "Match Settings",
     .items = main_menu_item_options,
-    .num_items = 1
+    .num_items = 2
   };
 
   main_menu_item_options[0] = (SimpleMenuItem) {
     .title = "Sets",
-    .subtitle = num_sets_to_string(settings.num_sets),
-    .callback = cycle_match_type
+    .subtitle = setting_to_string(settings.num_sets),
+    .callback = cycle_set_num
   };
-
+  
+  
+  main_menu_item_options[1] = (SimpleMenuItem) {
+    .title = "Points",
+    .subtitle = setting_to_string(settings.num_points),
+    .callback = cycle_points
+  };
+  
   main_menu_layer = simple_menu_layer_create(bounds, window, main_menu_sections, 2, NULL);
   layer_add_child(window_layer, simple_menu_layer_get_layer(main_menu_layer));
 
