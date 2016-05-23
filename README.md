@@ -6,7 +6,7 @@ Match formats are easily configured inside the app and it defaults to the settin
 
 ## Screenshots
 
-TODO
+![Match screenshot](https://raw.githubusercontent.com/FraBoCH/pebble-badminton/master/graphics/match.png) ![Menu screenhot](https://raw.githubusercontent.com/FraBoCH/pebble-badminton/master/graphics/master/graphics/menu.png) ![Result screenshot](https://raw.githubusercontent.com/FraBoCH/pebble-badminton/master/graphics/summary.png)
 
 ## Instructions
 
