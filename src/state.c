@@ -17,7 +17,7 @@ State state_new(Settings *settings) {
     , .is_final_set = settings->num_sets == 1
     , .num_sets = settings->num_sets
     , .num_points = settings->num_points
-    , .max_points = settings->num_points == 21 ? 30 : settings->num_points + 5
+    , .max_points = settings->max_points
     , .final_set = settings->final_set
     , .server = settings->first_server
     };
@@ -54,27 +54,22 @@ void next_state(State *s, char *point) {
 
 void increment_point(State *s, int *scorer, int *non_scorer, int *scorer_sets, int *non_scorer_sets, bool is_player_score) {
 
+    *scorer = *scorer + 1;
+  
     toggle_server(s, is_player_score);
   
-    if (*scorer < s->num_points) {
-      *scorer = *scorer + 1;
-      return;
-    } else if (*scorer < s->max_points && *scorer - *non_scorer < 1) {
-      *scorer = *scorer + 1;
-      return;
-    } else {
+    if ((*scorer == s->num_points && *scorer - *non_scorer >= 2) // normal end
+        || (*scorer > s->num_points && (*scorer - *non_scorer >= 2 || *scorer == s->max_points))) // + 2 end or max
+    {
+      // Save end score of set in state
       int current_set = *scorer_sets + *non_scorer_sets;
       s->player_sets_final_scores[current_set] = is_player_score ? *scorer : *non_scorer;
       s->opponent_sets_final_scores[current_set]= is_player_score ? *non_scorer : *scorer;
       
-      APP_LOG(APP_LOG_LEVEL_DEBUG
-      , "Storing final scrores for set %d: %d-%d", current_set
-      , s->player_sets_final_scores[current_set], s->opponent_sets_final_scores[current_set]);
-     
+      // Reset scores to 0 and next state
       *scorer = 0;
       *non_scorer = 0;
       increment_set(s, scorer_sets, non_scorer_sets);
-      return;
     }
 }
 

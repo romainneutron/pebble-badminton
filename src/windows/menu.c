@@ -7,8 +7,6 @@ static SimpleMenuSection main_menu_sections[2];
 static SimpleMenuItem main_menu_items[1];
 static SimpleMenuItem main_menu_item_options[2];
 
-static const char *score_type[] = { "3 sets of 21 points", "1 set of 21 points", "3 sets of 15 points", "custom" };
-
 static Settings settings;
 
 const char *setting_to_string(int n) {
@@ -19,11 +17,6 @@ const char *setting_to_string(int n) {
     case 21: return "21";
     default: return "?";
   }
-}
-
-void cycle_score_types() {
-  main_menu_item_options[0].subtitle = setting_to_string(settings.num_sets);
-  layer_mark_dirty(simple_menu_layer_get_layer(main_menu_layer));
 }
 
 void cycle_set_num() {
@@ -51,6 +44,9 @@ void cycle_points() {
       settings.num_points = 99;
       break;
   }
+  // compute max_points depending on num points according to badminton law
+  settings.max_points = settings.num_points == 21 ? 30 : settings.num_points + 5;
+  
   main_menu_item_options[1].subtitle = setting_to_string(settings.num_points);
   layer_mark_dirty(simple_menu_layer_get_layer(main_menu_layer));
 }
@@ -69,6 +65,7 @@ static void window_load(Window *window) {
   settings = (Settings)
     { .num_sets = 3
     , .num_points = 21
+    , .max_points = 30
     , .first_server = PLAYER
     };
 

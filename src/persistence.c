@@ -16,12 +16,14 @@ const char *byte_to_binary(int x) {
 void load_settings(Settings *settings) {
   if (persist_exists(NUM_SETS)) settings->num_sets = persist_read_int(NUM_SETS);
   if (persist_exists(NUM_POINTS)) settings->num_points = persist_read_int(NUM_POINTS);
+  if (persist_exists(MAX_POINTS)) settings->max_points = persist_read_int(MAX_POINTS);
   if (persist_exists(FINAL_SET)) settings->final_set = persist_read_int(FINAL_SET);
 }
 
 void save_settings(Settings *settings) {
   persist_write_int(NUM_SETS, settings->num_sets);
   persist_write_int(NUM_POINTS, settings->num_points);
+  persist_write_int(MAX_POINTS, settings->max_points);
   persist_write_int(FINAL_SET, settings->final_set);
 }
 
@@ -80,6 +82,7 @@ void load_match(list_t *serial) {
 void clear_all() {
   persist_delete(NUM_SETS);
   persist_delete(NUM_POINTS);
+  persist_delete(MAX_POINTS);
   persist_delete(FINAL_SET);
   persist_delete(FIRST_SERVER);
   persist_delete(SERIALISED_MATCH);

@@ -8,16 +8,25 @@
     "longName": "Badminton score",
     "projectType": "native",
     "resources": {
-        "media": []
+        "media": [
+            {
+                "file": "images/menu-icon.png",
+                "menuIcon": true,
+                "name": "menu_icon",
+                "targetPlatforms": null,
+                "type": "png"
+            }
+        ]
     },
     "sdkVersion": "3",
     "shortName": "Badminton",
     "targetPlatforms": [
         "aplite",
-        "basalt"
+        "basalt",
+        "chalk"
     ],
     "uuid": "7cd6aeae-176c-4c01-ba69-2e8b0093c84b",
-    "versionLabel": "0.9",
+    "versionLabel": "1.0",
     "watchapp": {
         "watchface": false
     }
