@@ -36,3 +36,5 @@ I love open source software which is why I've developed this app in the open. Th
 code is released with the [BSD 3-clause](/LICENSE.md) open source license,
 which effectively means "do with this what you like, but don't use my name to endorse
 any derivative works without my permission".
+
+Icon made by [Freepik](http://www.freepik.com) from [www.flaticon.com](http://www.flaticon.com)
