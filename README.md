@@ -2,7 +2,7 @@
 
 Built by a Badminton player for Badminton players. Keep track of the score in your Badminton matches with simple controls and a clean, uncluttered interface.
 
-Match formats are easily configured inside the app and it defaults to the settings you last used. If yours isn't configurable, let me know because I want to support all commonly played formats.
+Match formats are easily configured inside the app and it defaults to the settings you last used. If yours isn't configurable, let me know.
 
 ## Screenshots
 
@@ -11,7 +11,6 @@ TODO
 ## Instructions
 
 - Select the match format then choose 'Start match'
-- Use the middle button to toggle who is serving first
 - Your score is at the bottom and your opponent's score is at the top
 - Hit the bottom button when you score, the top button when your opponent scores
 - If you make a mistake, hit the middle button to undo
@@ -19,15 +18,15 @@ TODO
 ## Features
 
 - Clean interface
-- Many match formats supported
 - Infinite undo
+- Score summary at the end of the match
 
 ## Roadmap
 
-- More detailed match report when the match has finished
-- Support any missing match 
+- Match history, maybe in timeline first
+- Add some color
 - Integration with Pebble Health API
-
+- 
 ## License
 
 Copyright (c) 2016, François Bochatay
