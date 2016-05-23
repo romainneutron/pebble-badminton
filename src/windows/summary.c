@@ -51,7 +51,6 @@ static void window_load(Window *window) {
   text_layer_set_font(match_score_details, fonts_get_system_font(FONT_KEY_GOTHIC_18));
   text_layer_set_text_alignment(match_score_details, GTextAlignmentCenter);
   layer_add_child(window_layer, (Layer *) match_score_details);
-
 }
 
 static void menu_click_handler(ClickRecognizerRef recognize, void *context) {
