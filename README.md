@@ -26,7 +26,7 @@ TODO
 - Match history, maybe in timeline first
 - Add some color
 - Integration with Pebble Health API
-- 
+
 ## License
 
 Copyright (c) 2016, François Bochatay
