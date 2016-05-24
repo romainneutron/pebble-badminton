@@ -6,16 +6,22 @@ static State *final_state;
 static TextLayer *result;
 static TextLayer *match_score;
 static TextLayer *match_score_details;
-static char match_score_str[6];
-static char match_score_details_str[30];
 
-static void window_load(Window *window) {
+// Largest expected inbox and outbox message sizes
+const uint32_t inbox_size = 64;
+const uint32_t outbox_size = 256;
 
+static void window_load(Window *window) {  
+  char *result_str = malloc(sizeof(char)*8);
+  char *match_score_str = malloc(sizeof(char)*6);
+  char *match_score_details_str = malloc(sizeof(char)*30);
+  
   Layer *window_layer = window_get_root_layer(window);
   GRect bounds = layer_get_frame(window_layer);
 
   result = text_layer_create(GRect(10, 10, bounds.size.w - 20, 38));
-  text_layer_set_text(result, final_state->player_sets > final_state->opponent_sets ? "You win!" : "You lose");
+  strncpy(result_str, final_state->player_sets > final_state->opponent_sets ? "You win!" : "You lose", 8);
+  text_layer_set_text(result, result_str);
   text_layer_set_background_color(result, GColorBlack);
   text_layer_set_text_color(result, GColorWhite);
   text_layer_set_font(result, fonts_get_system_font(FONT_KEY_GOTHIC_28_BOLD));
@@ -51,6 +57,30 @@ static void window_load(Window *window) {
   text_layer_set_font(match_score_details, fonts_get_system_font(FONT_KEY_GOTHIC_18));
   text_layer_set_text_alignment(match_score_details, GTextAlignmentCenter);
   layer_add_child(window_layer, (Layer *) match_score_details);
+  
+  /* Add pin to timeline */
+  app_message_open(inbox_size, outbox_size);
+  DictionaryIterator *out_iter;
+  AppMessageResult result = app_message_outbox_begin(&out_iter);
+  if(result == APP_MSG_OK) {
+    // Add data to message
+    dict_write_cstring(out_iter, AppKeyResult, result_str);
+    dict_write_cstring(out_iter, AppKeyScore, match_score_str);
+    dict_write_cstring(out_iter, AppKeyScoreDetails, match_score_details_str);
+  
+    // Send this message
+    result = app_message_outbox_send();
+    if(result != APP_MSG_OK) {
+      APP_LOG(APP_LOG_LEVEL_ERROR, "Error sending the outbox: %d", (int)result);
+    }
+  } else {
+    // The outbox cannot be used right now
+    APP_LOG(APP_LOG_LEVEL_ERROR, "Error preparing the outbox: %d", (int)result);
+  }
+  
+  free(result_str);
+  free(match_score_str);
+  free(match_score_details_str);
 }
 
 static void menu_click_handler(ClickRecognizerRef recognize, void *context) {
@@ -65,6 +95,7 @@ static void click_config_provider(void *context) {
 static void window_unload(Window *window) {
   text_layer_destroy(result);
   text_layer_destroy(match_score);
+  text_layer_destroy(match_score_details);
   window_destroy(window);
   s_main_window = NULL;
 }

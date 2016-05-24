@@ -1,5 +1,10 @@
 {
-    "appKeys": {},
+    "appKeys": {
+        "Duration": 3,
+        "Result": 0,
+        "Score": 1,
+        "ScoreDetails": 2
+    },
     "capabilities": [
         ""
     ],
@@ -22,11 +27,10 @@
     "shortName": "Badminton",
     "targetPlatforms": [
         "aplite",
-        "basalt",
-        "chalk"
+        "basalt"
     ],
     "uuid": "7cd6aeae-176c-4c01-ba69-2e8b0093c84b",
-    "versionLabel": "1.0",
+    "versionLabel": "1.1",
     "watchapp": {
         "watchface": false
     }

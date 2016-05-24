@@ -5,7 +5,6 @@ static Window *s_main_window;
 static Settings settings;
 
 static TextLayer *sets_label;
-static TextLayer *games_label;
 
 static TextLayer *player_score;
 static char player_points_str[4];
@@ -184,7 +183,6 @@ static void window_unload(Window *window) {
   list_destroy(serial);
 
   text_layer_destroy(sets_label);
-  text_layer_destroy(games_label);
   text_layer_destroy(player_score);
   text_layer_destroy(opponent_score);
   text_layer_destroy(player_sets);
