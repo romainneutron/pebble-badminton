@@ -20,7 +20,7 @@ Match formats are easily configured inside the app and it defaults to the settin
 - Clean interface
 - Infinite undo
 - Score summary at the end of the match
-- Recent scores accessible from timeline (unless phone was disconnected at match end)
+- Recent scores are available from timeline (unless phone was disconnected at match end)
 
 ## Roadmap
 
