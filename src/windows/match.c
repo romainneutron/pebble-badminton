@@ -189,7 +189,7 @@ static void window_unload(Window *window) {
   text_layer_destroy(opponent_score);
   text_layer_destroy(player_sets);
   text_layer_destroy(opponent_sets);
-
+  
   layer_destroy(layout_layer);
   layout_layer = NULL;
 

@@ -93,7 +93,6 @@ static void window_load(Window *window) {
     .callback = cycle_set_num
   };
   
-  
   main_menu_item_options[1] = (SimpleMenuItem) {
     .title = "Points",
     .subtitle = setting_to_string(settings.num_points),
@@ -102,7 +101,6 @@ static void window_load(Window *window) {
   
   main_menu_layer = simple_menu_layer_create(bounds, window, main_menu_sections, 2, NULL);
   layer_add_child(window_layer, simple_menu_layer_get_layer(main_menu_layer));
-
 }
 
 static void window_unload(Window *window) {
