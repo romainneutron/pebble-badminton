@@ -1,4 +1,6 @@
-# Pebble Badminton
+![Match screenshot](https://raw.githubusercontent.com/FraBoCH/pebble-badminton/master/graphics/banner.png)
+
+# Pebble Badminton Score
 
 Built by a Badminton player for Badminton players. Keep track of the score in your Badminton matches with simple controls and a clean, uncluttered interface.
 
