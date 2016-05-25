@@ -11,7 +11,7 @@ Pebble.addEventListener('appmessage', function(e) {
 
   console.log('Got message: ' + JSON.stringify(dict));
   
-  if(dict['Result'] && dict['Score'] && dict['ScoreDetails']) {
+  if(dict.Result && dict.Score && dict.ScoreDetails) {
     var date = new Date();
     
     var pin = {
@@ -19,8 +19,8 @@ Pebble.addEventListener('appmessage', function(e) {
       "time": date.toISOString(),
       "layout": {
         "type": "genericPin",
-        "title": "Badminton match finished",
-        "body": dict['Result'] + " by "+ dict['Score'] + ". Détails: " + dict['ScoreDetails'],
+        "title":  dict.Result + " a badminton match!",
+        "body": "Score: " + dict.Score + ". Details: " + dict.ScoreDetails,
         "tinyIcon": "system://images/TIMELINE_SPORTS"
       }
     };
